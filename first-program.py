@@ -6,3 +6,4 @@ for i in range(1,10001):
     j=i*i
     print(j*j)
 
+print('vcarma')
