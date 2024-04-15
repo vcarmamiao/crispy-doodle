@@ -1,4 +1,4 @@
 import numpy as np
 import pandas as pd
-for number in range(1, 60):
-    print(number)
+a=(5.6/1.8)**2
+print(a)
