@@ -1,0 +1,67 @@
+Table Name,Column Name,Data Type,Description
+Users,user_id,INT AUTO_INCREMENT PRIMARY KEY,用户的唯一标识
+Users,name,VARCHAR(50) NOT NULL,用户名
+Users,password,VARCHAR(255) NOT NULL,用户密码
+Users,user_type,"ENUM('resident', 'admin', 'superadmin') NOT NULL",用户类型
+Users,email,VARCHAR(100),用户邮箱
+Users,phone,VARCHAR(20),用户电话
+Users,created_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP,创建时间
+Users,updated_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,更新时间
+Buildings,building_id,INT AUTO_INCREMENT PRIMARY KEY,楼栋的唯一标识
+Buildings,name,VARCHAR(100) NOT NULL,楼栋名称
+Buildings,address,VARCHAR(255) NOT NULL,楼栋地址
+Buildings,created_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP,创建时间
+Buildings,updated_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,更新时间
+Units,unit_id,INT AUTO_INCREMENT PRIMARY KEY,单元的唯一标识
+Units,building_id,INT,外键，关联 Buildings 表
+Units,name,VARCHAR(100) NOT NULL,单元名称
+Units,floor,INT NOT NULL,楼层
+Units,created_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP,创建时间
+Units,updated_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,更新时间
+Houses,house_id,INT AUTO_INCREMENT PRIMARY KEY,房子的唯一标识
+Houses,current_resident_id,INT,外键，关联 Users 表，当前住户
+Houses,owner_id,INT,外键，关联 Users 表，户主
+Houses,building_id,INT,外键，关联 Buildings 表，几栋
+Houses,unit_id,INT,外键，关联 Units 表，几单元
+Houses,house_number,VARCHAR(50),门牌号
+Houses,area,FLOAT,面积
+Houses,created_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP,创建时间
+Houses,updated_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,更新时间
+ParkingSpaces,parking_space_id,INT AUTO_INCREMENT PRIMARY KEY,停车位的唯一标识
+ParkingSpaces,building_id,INT,外键，关联 Buildings 表，几栋
+ParkingSpaces,parking_number,VARCHAR(50),车位号
+ParkingSpaces,owner_id,INT,外键，关联 Users 表，所有人
+ParkingSpaces,current_user_id,INT,外键，关联 Users 表，现在用户
+ParkingSpaces,created_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP,创建时间
+ParkingSpaces,updated_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,更新时间
+Bills,bill_id,INT AUTO_INCREMENT PRIMARY KEY,账单的唯一标识
+Bills,balance,"DECIMAL(10, 2)",余额
+Bills,amount_change,"DECIMAL(10, 2)",变化金额
+Bills,new_balance,"DECIMAL(10, 2)",变化后余额
+Bills,time,TIMESTAMP DEFAULT CURRENT_TIMESTAMP,时间
+Bills,note,TEXT,备注
+PropertyFees,fee_id,INT AUTO_INCREMENT PRIMARY KEY,物业费的唯一标识
+PropertyFees,house_id,INT,外键，关联 Houses 表
+PropertyFees,start_date,DATE,开始收取时间
+PropertyFees,last_date,DATE,上次收取时间
+PropertyFees,amount_due,"DECIMAL(10, 2)",还需收取金额
+Notifications,notification_id,INT AUTO_INCREMENT PRIMARY KEY,通知的唯一标识
+Notifications,time,TIMESTAMP DEFAULT CURRENT_TIMESTAMP,时间
+Notifications,notifier_id,INT,外键，关联 Users 表，通知人ID
+Notifications,content,TEXT,内容
+RepairRequests,repair_id,INT AUTO_INCREMENT PRIMARY KEY,维修事件的唯一标识
+RepairRequests,initiator_id,INT,外键，关联 Users 表，维修发起人
+RepairRequests,priority,"ENUM('low', 'medium', 'high')",优先级
+RepairRequests,location,VARCHAR(255),地点
+RepairRequests,created_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP,创建时间
+RepairRequests,updated_at,TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,更新时间
+Leases,lease_id,INT AUTO_INCREMENT PRIMARY KEY,租赁事件的唯一标识
+Leases,tenant_id,INT,外键，关联 Users 表，租户ID
+Leases,owner_id,INT,外键，关联 Users 表，所属人ID
+Leases,start_date,DATE,开始时间
+Leases,end_date,DATE,结束时间
+Owners,owner_id,INT PRIMARY KEY,业主的唯一标识，关联 Users 表
+Owners,house_ids,TEXT,拥有的房产IDs（JSON格式）
+Owners,parking_space_ids,TEXT,拥有的停车位IDs（JSON格式）
+Owners,email,VARCHAR(100),邮箱
+Owners,phone,VARCHAR(20),电话
